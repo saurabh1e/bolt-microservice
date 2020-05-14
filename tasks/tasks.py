@@ -22,7 +22,7 @@ def save_position(data):
     if data['device']['id'] == 10836:
         redis.rpush('fuel_devices', json.dumps({'deviceid': data['device']['id'], 'fuel': fuel,
                                                 'serverTime': data['position']['serverTime'], 'fixTime': data['position']['fixTime'],
-                                                'temp': data['position']['attributes']['io202'],
+                                                'temp': io202,
                                                 'latitude': data['position']['latitude'],
                                                 'longitude': data['position']['longitude'],
                                                 'name': data['device']['name']}))
