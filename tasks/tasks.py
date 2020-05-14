@@ -13,13 +13,16 @@ def send_notification(args):
 def save_position(data):
     redisKey = 'device_{}'.format(data['device']['id'])
 
-    ignition = True if data['position']['attributes']['ignition'] == True else False
-    alarm = data['position']['attributes']['alarm']
+    ignition = data['position']['attributes']['ignition'] if 'ignition' in data['position']['attributes'] else None
+    alarm = data['position']['attributes']['alarm'] if 'alarm' in data['position']['attributes'] else None
+    io202 = data['position']['attributes']['io202'] if 'io202' in data['position']['attributes'] else None
+    fuel = data['position']['attributes']['fuel'] if 'fuel' in data['position']['attributes'] else None
+    totalDistance = data['position']['attributes']['totalDistance'] if 'totalDistance' in data['position']['attributes'] else None
 
     if data['device']['id'] == 10836:
-        redis.rpush('fuel_devices', json.dumps({'deviceid': data['device']['id'], 'fuel': data['position']['attributes']['fuel'],
+        redis.rpush('fuel_devices', json.dumps({'deviceid': data['device']['id'], 'fuel': fuel,
                                                 'serverTime': data['position']['serverTime'], 'fixTime': data['position']['fixTime'],
-                                                'temp': data['position']['io202'],
+                                                'temp': data['position']['attributes']['io202'],
                                                 'latitude': data['position']['latitude'],
                                                 'longitude': data['position']['longitude'],
                                                 'name': data['device']['name']}))
@@ -34,7 +37,7 @@ def save_position(data):
                 'longitude', data['position']['longitude'],
                 'speed', data['position']['speed'],
                 'course', data['position']['course'],
-                'totalDistance', data['position']['attributes']['totalDistance'],
+                'totalDistance', totalDistance,
                 'lastUpdate', data['device']['lastUpdate'],
                 'ignition', ignition,
                 'alarm', alarm,
