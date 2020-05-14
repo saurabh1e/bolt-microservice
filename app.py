@@ -33,7 +33,7 @@ def index():
 
 @app.route('/save_position', methods=['POST'])
 def save_position():
-    celery.send_task('save_position', request.json)
+    celery.send_task('save_position', [request.json])
     return '200'
 
 
