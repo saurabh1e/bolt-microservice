@@ -11,7 +11,7 @@ def send_notification(args):
 
 @celery.task(name='save_position')
 def save_position(data):
-    redisKey = 'devices_{}'.format(data['device']['id'])
+    redisKey = 'device_{}'.format(data['device']['id'])
 
     ignition = data['position']['attributes']['ignition'] if 'ignition' in data['position']['attributes'] else None
     alarm = data['position']['attributes']['alarm'] if 'alarm' in data['position']['attributes'] else None
