@@ -27,7 +27,8 @@ def save_position(data):
                                                 'longitude': data['position']['longitude'],
                                                 'name': data['device']['name']}))
 
-    redis.hmset(redisKey, json.dumps({
+
+    redis.hmset(redisKey, {
                 'id': data['device']['id'],
                 'uniqueId': data['device']['uniqueId'],
                 'name': data['device']['name'],
@@ -39,8 +40,8 @@ def save_position(data):
                 'course': data['position']['course'],
                 'totalDistance': totalDistance,
                 'lastUpdate': data['device']['lastUpdate'],
-                'ignition': ignition,
-                'alarm': alarm,
-                'pushedtoServer': False,
-                'geofenceIds': data['device']['geofenceIds'],
-                'posAttr': data['position']['attributes']}))
+                'ignition': json.dumps(ignition),
+                'alarm': json.dumps(alarm),
+                'pushedtoServer': json.dumps(False),
+                'geofenceIds': json.dumps(data['device']['geofenceIds']),
+                'posAttr': json.dumps(data['position']['attributes'])})
