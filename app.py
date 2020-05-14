@@ -31,9 +31,9 @@ def index():
     return '200'
 
 
-@app.route('/send_notification', methods=['POST'])
-def send_notification():
-    celery.send_task('send_notification', request.json)
+@app.route('/save_position', methods=['POST'])
+def save_position():
+    celery.send_task('save_position', request.json)
     return '200'
 
 
