@@ -1,5 +1,5 @@
 from celery import Celery
-from flask import Flask
+from flask import Flask, request
 from flask_redis import FlaskRedis
 from flask_socketio import SocketIO
 from utils.sms import sms
@@ -31,9 +31,9 @@ def index():
     return '200'
 
 
-@app.route('/send_notification')
+@app.route('/send_notification', methods=['POST'])
 def send_notification():
-    celery.send_task('send_notification', [1])
+    celery.send_task('send_notification', request.json)
     return '200'
 
 
